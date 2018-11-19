@@ -75,15 +75,18 @@ class MixinAuthController implements ControllerInterface
                     'avatarUrl' => $profile['data']['avatar_url']
                 ];
                 $user = User::where('mixin_id', $profile['data']['identity_number'])->first();
-                if(!$user) $user = new User;
-                $user->username = $profile['data']['full_name'];
-                $user->join_time = time();
-                $user->email = $profile['data']['identity_number'].'@vcdiandian.com'; 
-                $user->password = md5($profile['data']['identity_number'].rand(100,1000000000)); 
-                $user->mixin_id = $profile['data']['identity_number'];
-                $user->is_activated = 1;
-                $user->save();
-                return $this->authResponse->make($request, $identification, $suggestions);
+                if(!$user) {$user = new User;
+                    $user->username = $profile['data']['full_name'];
+                    $user->join_time = time();
+                    $user->email = $profile['data']['identity_number'].'@vcdiandian.com'; 
+                    $user->password = md5($profile['data']['identity_number'].rand(100,1000000000)); 
+                    $user->mixin_id = $profile['data']['identity_number'];
+                    $user->is_activated = 1;
+                    $user->save();
+                }
+                $this->authResponse->make($request, $identification, $suggestions);
+                header("Location:/");
+                exit;
             } else {
                 echo '<pre>';var_dump($result);exit;
             }
