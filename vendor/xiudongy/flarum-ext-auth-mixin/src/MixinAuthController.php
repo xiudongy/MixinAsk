@@ -79,7 +79,7 @@ class MixinAuthController implements ControllerInterface
                 $mixin->setModel('me');
                 $profile = $mixin->readProfile($token);
                 //$identification = ['email' => $profile['data']['identity_number'].'@miniwenda.com'];
-                $identification = ['mixin_id' => $profile['data']['identity_number']];
+                $identification = ['email' => $profile['data']['identity_number'].'@vcdiandian.com'];
                 $suggestions = [
                     'username' => $profile['data']['full_name'],
                     'avatarUrl' => $profile['data']['avatar_url']
