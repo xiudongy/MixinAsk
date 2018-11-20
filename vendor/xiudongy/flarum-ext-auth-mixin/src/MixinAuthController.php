@@ -63,6 +63,7 @@ class MixinAuthController implements ControllerInterface
                 'session_id' => $session_id,
                 'private_key' => $private_key
             ]);
+            /*
             if(isset($_COOKIE['mixin_access_token'])) {
                 $token = $_COOKIE['mixin_access_token']; 
             } else {
@@ -75,6 +76,13 @@ class MixinAuthController implements ControllerInterface
                     echo '<pre>';var_dump($result);exit;
                 }
             }
+            */
+            $mixin->setModel('oauth');
+            $result = $mixin->getOauthToken($client_id, $_GET['code'], $client_secret);
+            if(isset($result['data']['access_token'])) {
+                $token = $result['data']['access_token'];
+            }
+
             if($token) {
                 $mixin->setModel('me');
                 $profile = $mixin->readProfile($token);
